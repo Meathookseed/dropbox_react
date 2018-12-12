@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
-import Home from './components/LoginForm'
+
 
 import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
 
 class App extends Component {
   render() {
       return(
           <div>
-           <LoginForm/>
+              <RegisterForm/>
+              <LoginForm/>
           </div>
       )
   }
