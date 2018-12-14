@@ -2,6 +2,7 @@ import React from 'react';
 
 import axios from 'axios';
 
+
 export default class LoginForm extends React.Component {
     constructor(props){
         super(props);
@@ -27,7 +28,7 @@ export default class LoginForm extends React.Component {
                 const username = res.data.user.username;
                 const password = res.data.user.password;
                 const links = res.data.user.links.user_self_url;
-                console.log(res.data);
+                console.log(res.data.user);
                 this.setState({username:username,password:password,links:links});
             })
     }
@@ -44,7 +45,7 @@ export default class LoginForm extends React.Component {
         )}
         else {
             return (
-                <mphantom>s</mphantom>
+                null
             )
         }
     }
