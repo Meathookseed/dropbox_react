@@ -1,13 +1,11 @@
 import React from 'react'
 import axios from 'axios';
 import { Container, Col, Form, FormGroup, Label, Input , Button} from 'reactstrap'
-import Logout from './Logout'
-import {Redirect} from "react-router-dom";
-import Navigation from '../components/Navigation'
-
-class SignInForm extends React.Component{
+import {withRouter} from 'react-router-dom';
+class LogInForm extends React.Component{
     constructor (props) {
         super(props);
+        this.routeChange = this.routeChange.bind(this);
         this.state = {
             isAuthorized: null,
             token: "",
@@ -15,6 +13,10 @@ class SignInForm extends React.Component{
         };
     }
 
+    routeChange(){
+        let path = '/';
+        this.props.history.push(path);
+    }
     handleFormSubmit = (event) => {
         event.preventDefault();
         const username = event.target.elements.username.value;
@@ -41,12 +43,11 @@ class SignInForm extends React.Component{
     render() {
             return (
                 <div>
-                    <Navigation/>
                     <Container className='App'>
                         <h2>Login</h2>
                         <Form name='login_form' onSubmit={event =>
                             this.handleFormSubmit(event,
-                            ).then(submitForm).then(<Redirect to='/'/>)}
+                            ).then(submitForm).then(this.routeChange)}
                         >
                             <Col>
                                 <FormGroup>
@@ -71,7 +72,6 @@ class SignInForm extends React.Component{
                             <Button type='submit'>Submit</Button>
                         </Form>
                     </Container>
-                    <Logout/>
                 </div>
             );
 
@@ -85,4 +85,4 @@ function submitForm() {
     frm.reset();
     return false;
 }
-export default SignInForm;
+export default withRouter(LogInForm);

@@ -11,7 +11,8 @@
     "react-material-components-web": "^0.1.18",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
-    "reactstrap": "^6.5.0"
+    "reactstrap": "^6.5.0",
+    "axios": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -2,14 +2,17 @@ import React from 'react';
 
 import axios from 'axios';
 
+import {Jumbotron} from "reactstrap";
 
-export default class LoginForm extends React.Component {
+
+export default class LoggedIn extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             isAuthorized: !!localStorage.getItem('token'),
             username: "",
             password: "",
+            photo:"",
             links: "",
             admin: null,
             id: localStorage.getItem('id')
@@ -28,25 +31,23 @@ export default class LoginForm extends React.Component {
                 const username = res.data.user.username;
                 const password = res.data.user.password;
                 const links = res.data.user.links.user_self_url;
+                const photo = res.data.user.photo;
                 console.log(res.data.user);
-                this.setState({username:username,password:password,links:links});
+                this.setState({username:username,password:password,links:links,photo:photo});
             })
     }
     }
 
     render() {
-        if(this.state.isAuthorized){
         return (
-            <ul>
-                <li>{this.state.username}</li>
-                <li>{this.state.password}</li>
-                <li>{this.state.links}</li>
-            </ul>
-        )}
-        else {
-            return (
-                null
-            )
-        }
+            <div className='container-fluid m-0 p-0 text-center h-50'>
+            <Jumbotron fluid>
+                <h1 className="display-1">Hello, {this.state.username}!</h1>
+                <img src={this.state.photo} alt=''/>
+                <p className="lead">You at start of discovering of my new project.</p>
+                <hr className="my-2"/>
+            </Jumbotron>
+            </div>
+        )
     }
 }

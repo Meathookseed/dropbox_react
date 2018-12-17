@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import { Container, Col, Form, FormGroup, Label, Input , Button} from 'reactstrap'
-import Navigation from '../components/Navigation'
+import {Link} from "react-router-dom";
 
 class RegisterForm extends React.Component{
     constructor (props) {
@@ -14,7 +14,6 @@ class RegisterForm extends React.Component{
     }
 
     handleFormSubmit = (event) => {
-        event.preventDefault();
         const username = event.target.elements.username.value;
         const password = event.target.elements.password.value;
         const email = event.target.elements.email.value;
@@ -37,14 +36,12 @@ class RegisterForm extends React.Component{
                 }
             );
     };
-
     render() {
         return (
             <div>
-                <Navigation/>
-                <Container className='App'>
+                <Container className='App text-center'>
                     <h2>Registration</h2>
-                    <Form name='reg_form'  onSubmit = {event=>
+                    <Form  name='reg_form'  onSubmit = {event=>
                         this.handleFormSubmit(event,
                         ).then(submitForm)}
                     >
@@ -78,7 +75,9 @@ class RegisterForm extends React.Component{
                                 />
                             </FormGroup>
                         </Col>
-                        <Button type = 'submit'>Submit</Button>
+                        <Button type = 'submit'>
+                            <Link to='/register'>Submit</Link>
+                        </Button>
                     </Form>
                 </Container>
             </div>

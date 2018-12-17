@@ -1,6 +1,6 @@
 import React from "react"
 import {Button} from 'reactstrap'
-import {Redirect} from 'react-router-dom'
+
 
 class Logout extends React.Component {
     constructor(props){
@@ -21,10 +21,11 @@ class Logout extends React.Component {
     };
 
     render() {
-
         return(
-            <div>
-                <Button onClick={event=>{this.handleLogout(event)}}>sad</Button>
+            <div className='row'>
+                <div className='col-md-6 col-md-offset-10 '>
+                <Button className='mdc-button mdc-button--raised' onClick={event=>{this.handleLogout(event)}}>Log Out</Button>
+                </div>
             </div>
         )
 
