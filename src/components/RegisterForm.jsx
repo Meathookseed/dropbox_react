@@ -1,19 +1,24 @@
 import React from 'react'
 import axios from 'axios';
 import { Container, Col, Form, FormGroup, Label, Input , Button} from 'reactstrap'
-import {Link} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
 class RegisterForm extends React.Component{
     constructor (props) {
         super(props);
+        this.routeChange = this.routeChange.bind(this);
         this.state = {
-            isAuthorized: false,
             token: "",
             id: ""
         };
     }
+    routeChange(){
+        let path = '/';
+        this.props.history.push(path);
+    }
 
     handleFormSubmit = (event) => {
+        event.preventDefault();
         const username = event.target.elements.username.value;
         const password = event.target.elements.password.value;
         const email = event.target.elements.email.value;
@@ -29,7 +34,6 @@ class RegisterForm extends React.Component{
                     localStorage.setItem('token', token);
                     localStorage.setItem('id',id);
                     this.setState({
-                        isAuthorized: true,
                         token: token,
                         id: id
                     })
@@ -43,7 +47,7 @@ class RegisterForm extends React.Component{
                     <h2>Registration</h2>
                     <Form  name='reg_form'  onSubmit = {event=>
                         this.handleFormSubmit(event,
-                        ).then(submitForm)}
+                        ).then(this.routeChange)}
                     >
                         <Col>
                             <FormGroup>
@@ -75,8 +79,8 @@ class RegisterForm extends React.Component{
                                 />
                             </FormGroup>
                         </Col>
-                        <Button type = 'submit'>
-                            <Link to='/register'>Submit</Link>
+                        <Button className='mdc-button mdc-button--raised' type = 'submit'>
+                            Submit
                         </Button>
                     </Form>
                 </Container>
@@ -86,9 +90,4 @@ class RegisterForm extends React.Component{
 
 }
 
-function submitForm() {
-    let frm = document.getElementsByName('reg_form')[0];
-    frm.reset();
-    return false;
-}
-export default RegisterForm;
+export default withRouter(RegisterForm);

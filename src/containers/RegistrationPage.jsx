@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import RegisterForm from "../components/RegisterForm";
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 export class RegistrationPage extends Component {
   render() {
@@ -8,6 +9,7 @@ export class RegistrationPage extends Component {
       <div>
           <NavBar/>
           <RegisterForm/>
+          <Footer/>
       </div>
     )
   }

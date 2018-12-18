@@ -3,6 +3,7 @@ import Home from "../components/Home";
 import NavBar from "../components/NavBar";
 import LoggedIn from "../components/LoggedIn";
 import VaultCard from "../components/VaultCard";
+import Footer from "../components/Footer";
 
 export class IndexPage extends Component {
     constructor(props){
@@ -18,6 +19,7 @@ export class IndexPage extends Component {
                 <NavBar/>
                 <LoggedIn/>
                 <VaultCard/>
+                <Footer/>
             </div>
     )}
     else{
@@ -25,6 +27,7 @@ export class IndexPage extends Component {
             <div>
                 <NavBar/>
                 <Home/>
+                <Footer/>
             </div>
         )
     }

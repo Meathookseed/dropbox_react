@@ -28,11 +28,11 @@ export default class LoggedIn extends React.Component {
                 }
             })
             .then(res => {
+                console.log(res.data)
                 const username = res.data.user.username;
                 const password = res.data.user.password;
                 const links = res.data.user.links.user_self_url;
                 const photo = res.data.user.photo;
-                console.log(res.data.user);
                 this.setState({username:username,password:password,links:links,photo:photo});
             })
     }

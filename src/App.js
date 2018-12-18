@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import IndexPage from "./containers/IndexPage";
 import RegistrationPage from "./containers/RegistrationPage";
 import LoginPage from "./containers/LoginPage";
+import VaultViewPage from "./containers/VaultViewPage";
 
 
 class App extends Component {
@@ -12,9 +13,10 @@ class App extends Component {
           <div>
               <BrowserRouter>
                   <Switch>
-                      <Route path = "/login" component = {LoginPage}/>
-                      <Route path="/register" component = {RegistrationPage}/>
+                      <Route path = "/login" component = {LoginPage} exact />
+                      <Route path="/register" component = {RegistrationPage} exact/>
                       <Route path='/' component={IndexPage} exact/>
+                      <Route path='/vault/' component={VaultViewPage}/>
                       <Route component={Error}/>
                   </Switch>
               </BrowserRouter>

@@ -5,11 +5,7 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem, Button
+    Button
 } from 'reactstrap';
 import {withRouter, Link} from "react-router-dom";
 
@@ -46,7 +42,7 @@ class NavBar extends React.Component {
         if (this.state.isAuthorized)
             return (
                 <div className>
-                    <Navbar color="dark"  expand="sm">
+                    <Navbar color="dark"  expand="sm" fixed='top'>
                         <NavbarBrand>
                             <Link to='/'>Flask Dropbox</Link>
                         </NavbarBrand>
@@ -55,27 +51,10 @@ class NavBar extends React.Component {
                                 <NavItem>
                                     <Button className='mdc-button-sm mdc-button--raised m-1' onClick={this.handleLogout}>Logout</Button>
                                 </NavItem>
-                                <UncontrolledDropdown nav inNavbar>
-                                    <DropdownToggle className='m-1' nav caret>
-                                        GitHub
-                                    </DropdownToggle>
-                                    <DropdownMenu right>
-                                        <DropdownItem>
-                                            <NavLink  href="https://github.com/Meathookseed/dropbox_flask">GitHub Backend</NavLink>
-                                        </DropdownItem>
-                                        <DropdownItem divider />
-                                        <DropdownItem>
-                                            <NavItem>
-                                                <NavLink href = 'https://github.com/Meathookseed/dropbox_react'>GitHub Frontend</NavLink>
-                                            </NavItem>
-                                        </DropdownItem>
-                                    </DropdownMenu>
-                                </UncontrolledDropdown>
                             </Nav>
                         </Collapse>
                     </Navbar>
                 </div>
-
             );
         else {
             return(
@@ -96,22 +75,6 @@ class NavBar extends React.Component {
                                             onClick={this.handleSignIn}> Login
                                     </Button>
                                 </NavItem>
-                                <UncontrolledDropdown nav inNavbar>
-                                    <DropdownToggle className='m-1' nav caret>
-                                        GitHub
-                                    </DropdownToggle>
-                                    <DropdownMenu right>
-                                        <DropdownItem>
-                                            <NavLink  href="https://github.com/Meathookseed/dropbox_flask">GitHub Backend</NavLink>
-                                        </DropdownItem>
-                                        <DropdownItem divider />
-                                        <DropdownItem>
-                                            <NavItem>
-                                                <NavLink href = 'https://github.com/Meathookseed/dropbox_react'>GitHub Frontend</NavLink>
-                                            </NavItem>
-                                        </DropdownItem>
-                                    </DropdownMenu>
-                                </UncontrolledDropdown>
                             </Nav>
                         </Collapse>
                     </Navbar>

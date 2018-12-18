@@ -47,7 +47,7 @@ class LogInForm extends React.Component{
                         <h2>Login</h2>
                         <Form name='login_form' onSubmit={event =>
                             this.handleFormSubmit(event,
-                            ).then(submitForm).then(this.routeChange)}
+                            ).then(this.routeChange)}
                         >
                             <Col>
                                 <FormGroup>
@@ -80,9 +80,4 @@ class LogInForm extends React.Component{
 
 }
 
-function submitForm() {
-    let frm = document.getElementsByName('login_form')[0];
-    frm.reset();
-    return false;
-}
 export default withRouter(LogInForm);
