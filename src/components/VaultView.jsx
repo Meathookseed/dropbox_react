@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from "axios";
 import {Jumbotron} from "reactstrap";
 import {Link} from "react-router-dom";
-
+import FileCreate from '../components/FileCreate'
 export class VaultView extends Component {
 
     constructor(props){
@@ -49,6 +49,7 @@ export class VaultView extends Component {
                   <hr className="my-2"/>
                   <p className="lead">Here you could see all your file content that lies in vault</p>
               </Jumbotron>
+              <FileCreate/>
           </div>
           <div className='container-fluid'>
               <div className='row'>
@@ -56,7 +57,9 @@ export class VaultView extends Component {
                       <div key={file.file_id}>
                           <div  className="card shadow-sm m-3">
                               <div className="card-body text-center align-content-center " >
-                                  <img height='64' width='64' className='card-img img-thumbnail align-items-center sm-2' alt='' src="https://cdn4.iconfinder.com/data/icons/48-bubbles/48/12.File-512.png"/>
+                                  <a href={file.data} download>
+                                      <img height='64' width='64' className='card-img img-thumbnail align-items-center sm-2' alt='' src="https://cdn4.iconfinder.com/data/icons/48-bubbles/48/12.File-512.png"/>
+                                  </a>
                                   <h3 className="card-text">{file.name}</h3>
                                   <p>{file.description}</p>
                                   <div className="align-items-center">

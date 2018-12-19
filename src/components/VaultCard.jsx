@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 
 export class VaultCard extends Component {
     constructor(props){
         super(props);
+        this.routeChange = this.routeChange.bind(this)
         this.state = {
             vaults: [],
             id:localStorage.getItem('id')
@@ -22,7 +23,18 @@ export class VaultCard extends Component {
                     this.setState({vaults:vaults});
                 })
     }
+    handleDelete = (event,vault_id) =>{
+        event.preventDefault();
+        axios.delete(`http://127.0.0.1:5000/vault/${vault_id}`, {
+            headers:{
+                Bearer:`${localStorage.getItem('token')}`,
+            }})
+    };
 
+    routeChange(){
+        let path='/created';
+        this.props.history.push(path)
+    }
   render() {
     return (
         <div className='container-fluid'>
@@ -34,16 +46,17 @@ export class VaultCard extends Component {
                                 <img  className='card-img img-thumbnail align-items-center sm-2' alt='' src="https://vignette.wikia.nocookie.net/fallout/images/7/73/Icon_vault.png/revision/latest?cb=20151206172739"/>
                                 <h3 className="card-text">{vaults.title}</h3>
                                 <p>{vaults.description}</p>
-                                <div className="d-flex justify-content-between align-items-center">
+                                <div className="align-items-center">
                                     <div className="btn-group">
                                             <Link to={'/vault/'+vaults.vault_id}>
                                                 <button className='btn btn-sm btn-outline-secondary'>
                                                     View
                                                 </button>
                                             </Link>
-                                        <Link to={'/vault/edit'+vaults.vault_id}>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">
-                                                Edit
+                                        <Link to='/created'>
+                                            <button type="button" className="btn btn-sm btn-outline-secondary" onClick={event =>
+                                                this.handleDelete(event,vaults.vault_id)}>
+                                                Delete
                                             </button>
                                         </Link>
                                     </div>
@@ -58,4 +71,4 @@ export class VaultCard extends Component {
   }
 }
 
-export default VaultCard
+export default withRouter(VaultCard)
