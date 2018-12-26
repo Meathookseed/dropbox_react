@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios';
 import { Container, Col, Form, FormGroup, Label, Input , Button} from 'reactstrap'
 import {withRouter} from "react-router-dom";
+import {Textarea} from 'react-inputs-validation'
 
 class RegisterForm extends React.Component{
     constructor (props) {
@@ -9,7 +10,11 @@ class RegisterForm extends React.Component{
         this.routeChange = this.routeChange.bind(this);
         this.state = {
             token: "",
-            id: ""
+            id: "",
+            email:'',
+            username:'',
+            password:'',
+            formErorrs: {email:'',password:''}
         };
     }
     routeChange(){
@@ -40,6 +45,8 @@ class RegisterForm extends React.Component{
                 }
             );
     };
+
+
     render() {
         return (
             <div>
