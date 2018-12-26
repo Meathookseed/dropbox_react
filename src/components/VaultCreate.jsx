@@ -1,38 +1,31 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {withRouter} from "react-router-dom";
-import {Button,Input,Label,Form,FormGroup,Col,Container} from 'reactstrap'
-
-
+import {Form,Container} from 'reactstrap'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 
 export class VaultCreate extends Component {
     constructor(props){
         super(props);
         this.routeChange = this.routeChange.bind(this);
         this.state = {
-            title:'',
-            description:'',
+            title:"",
+            titleError:"",
+            description:"",
+            descriptionError:"",
             id:localStorage.getItem('id'),
-            titleValid:false,
-            FormErrors: {title: ''},
+            titleValid:false
         }
     }
 
-    validateTitle = (title) =>{
-        return title.length>2;
-    };
-    onTitleChange = (e) => {
-        const val = e.target.value;
-        console.log(val)
-        let valid = this.validateTitle(val);
-        this.setState({title:val, titleValid:valid})
-    };
     handleVaultCreate = (event) => {
         event.preventDefault();
         const title = event.target.elements.title.value;
         const description = event.target.elements.description.value;
         return axios.post(`http://127.0.0.1:5000/vault/${this.state.id}`,  {
                 title: title,
+
                 description: description,
 
             },{headers:{
@@ -45,6 +38,53 @@ export class VaultCreate extends Component {
         this.props.history.push(path)
     }
 
+    change = e => {
+        this.props.onChange({ [e.target.name]: e.target.value });
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    };
+
+    validate = () => {
+        let isError = false;
+        const errors = {
+            titleError: "",
+            descriptionError: "",
+        };
+
+        if (this.state.title.length < 4) {
+            isError = true;
+            errors.usernameError = "Title needs to be at least 4 characters long";
+        }
+
+        if (this.state.description.length < 10) {
+            isError = true;
+            errors.emailError = "Requires valid description";
+        }
+
+        this.setState({
+            ...this.state,
+            ...errors
+        });
+
+        return isError;
+    };
+    onSubmit = e => {
+        e.preventDefault();
+        // this.props.onSubmit(this.state);
+        const err =this.validate();
+        if (!err){
+        this.setState({
+            title:"",
+            titleError:"",
+            description:"",
+            descriptionError:""
+        });
+        this.props.onChange({
+            title:"",
+            description:"",
+        })};
+    };
 
   render() {
     return (
@@ -55,30 +95,25 @@ export class VaultCreate extends Component {
                   this.handleVaultCreate(event,
                   ).then(submitForm()).then(this.routeChange)}
               >
-                  <Col>
-                      <FormGroup>
-                          <Label>Title</Label>
-                          <Input
-                              type = 'text'
-                              name = 'title'
-                              placeholder = 'title'
-
-                          />
-                      </FormGroup>
-                  </Col>
-                  <Col>
-                      <FormGroup>
-                          <Label>Description</Label>
-                          <Input
-                              type = 'text'
-                              name = 'description'
-                              placeholder = 'description'
-                          />
-                      </FormGroup>
-                  </Col>
-                  <Button className='mdc-button mdc-button--raised' type = 'submit'>
-                      Submit
-                  </Button>
+                  <TextField
+                      name="title"
+                      hintText="title"
+                      floatingLabelText="title"
+                      value={this.state.title}
+                      onChange={e => this.change(e)}
+                      errorText={this.state.titleError}
+                  />
+                  <br />
+                  <TextField
+                      name="description"
+                      hintText="description"
+                      floatingLabelText="Description"
+                      value={this.state.description}
+                      onChange={e => this.change(e)}
+                      errorText={this.state.descriptionError}
+                  />
+                  <br />
+                  <RaisedButton label="Submit" primary onClick={e=>this.onSubmit(e)} />
               </Form>
           </Container>
       </div>

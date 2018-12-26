@@ -3,8 +3,7 @@ import React from 'react';
 import axios from 'axios';
 
 import {Jumbotron} from "reactstrap";
-import VaultCreate from "./VaultCreate";
-import VaultCard from "./VaultCard";
+
 
 
 export default class LoggedIn extends React.Component {

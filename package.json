@@ -5,6 +5,7 @@
   "dependencies": {
     "@material/react-button": "latest",
     "@react-mdc/textfield": "^0.1.11",
+    "material-ui": "^0.18.6",
     "axios": "latest",
     "bootstrap": "^4.1.3",
     "react": "^16.6.3",

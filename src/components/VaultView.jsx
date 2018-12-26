@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import {Jumbotron} from "reactstrap";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import FileCreate from '../components/FileCreate'
 export class VaultView extends Component {
 
@@ -13,7 +13,8 @@ export class VaultView extends Component {
             description: null,
             title: null,
             files:[]
-        }
+        };
+        this.routeChange = this.routeChange.bind(this)
     }
 
     componentDidMount() {
@@ -37,7 +38,12 @@ export class VaultView extends Component {
             headers:{
                 Bearer:`${localStorage.getItem('token')}`,
             }})
+            .then(this.routeChange)
     };
+    routeChange(){
+        let path='/created';
+        this.props.history.push(path)
+    }
 
   render() {
     return (
@@ -83,4 +89,4 @@ export class VaultView extends Component {
   }
 }
 
-export default VaultView
+export default withRouter(VaultView)
