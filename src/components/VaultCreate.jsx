@@ -54,12 +54,12 @@ export class VaultCreate extends Component {
 
         if (this.state.title.length < 4) {
             isError = true;
-            errors.usernameError = "Title needs to be at least 4 characters long";
+            errors.titleError = "Title needs to be at least 4 characters long";
         }
 
         if (this.state.description.length < 10) {
             isError = true;
-            errors.emailError = "Requires valid description";
+            errors.descriptionError = "Requires valid description";
         }
 
         this.setState({

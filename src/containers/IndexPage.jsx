@@ -13,13 +13,21 @@ export class IndexPage extends Component {
             fields:{}
         }
     }
+    onChange = updatedValue => {
+        this.setState({
+            fields: {
+                ...this.state.fields,
+                ...updatedValue
+            }
+        });
+    };
   render() {
     if (this.state.isAuthorized){
         return (
             <div>
                 <NavBar/>
                 <LoggedIn/>
-                <VaultCreate/>
+                <VaultCreate onChange={fields => this.onChange(fields)} />
                 <VaultCard/>
             </div>
     )}
