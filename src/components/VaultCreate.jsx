@@ -3,6 +3,8 @@ import axios from 'axios'
 import {withRouter} from "react-router-dom";
 import {Button,Input,Label,Form,FormGroup,Col,Container} from 'reactstrap'
 
+
+
 export class VaultCreate extends Component {
     constructor(props){
         super(props);
@@ -10,10 +12,21 @@ export class VaultCreate extends Component {
         this.state = {
             title:'',
             description:'',
-            id:localStorage.getItem('id')
+            id:localStorage.getItem('id'),
+            titleValid:false,
+            FormErrors: {title: ''},
         }
     }
 
+    validateTitle = (title) =>{
+        return title.length>2;
+    };
+    onTitleChange = (e) => {
+        const val = e.target.value;
+        console.log(val)
+        let valid = this.validateTitle(val);
+        this.setState({title:val, titleValid:valid})
+    };
     handleVaultCreate = (event) => {
         event.preventDefault();
         const title = event.target.elements.title.value;
@@ -32,6 +45,7 @@ export class VaultCreate extends Component {
         this.props.history.push(path)
     }
 
+
   render() {
     return (
       <div>
@@ -48,6 +62,7 @@ export class VaultCreate extends Component {
                               type = 'text'
                               name = 'title'
                               placeholder = 'title'
+
                           />
                       </FormGroup>
                   </Col>
@@ -61,7 +76,6 @@ export class VaultCreate extends Component {
                           />
                       </FormGroup>
                   </Col>
-
                   <Button className='mdc-button mdc-button--raised' type = 'submit'>
                       Submit
                   </Button>

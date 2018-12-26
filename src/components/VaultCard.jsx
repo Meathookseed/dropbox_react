@@ -9,7 +9,7 @@ export class VaultCard extends Component {
         this.state = {
             vaults: [],
             id:localStorage.getItem('id')
-        }
+        };
     }
     componentDidMount() {
             axios.get(`http://127.0.0.1:5000/user/${this.state.id}`,
@@ -23,14 +23,25 @@ export class VaultCard extends Component {
                     this.setState({vaults:vaults});
                 })
     }
-    handleDelete = (event,vault_id) =>{
+    handleDeleteFile = (event, files, vault_id) => {
         event.preventDefault();
+        files.map( files => (
+            axios.delete(`http://127.0.0.1:5000/file/${files.file_id}`, {
+                headers:{
+                    Bearer:`${localStorage.getItem('token')}`,
+                }})));
         axios.delete(`http://127.0.0.1:5000/vault/${vault_id}`, {
             headers:{
                 Bearer:`${localStorage.getItem('token')}`,
             }})
     };
 
+    // handleVaultDelete = (vault_id) => {
+    //     axios.delete(`http://127.0.0.1:5000/vault/${vault_id}`, {
+    //         headers:{
+    //             Bearer:`${localStorage.getItem('token')}`,
+    //         }})
+    // };
     routeChange(){
         let path='/created';
         this.props.history.push(path)
@@ -55,7 +66,7 @@ export class VaultCard extends Component {
                                             </Link>
                                         <Link to='/created'>
                                             <button type="button" className="btn btn-sm btn-outline-secondary" onClick={event =>
-                                                this.handleDelete(event,vaults.vault_id)}>
+                                                this.handleDeleteFile(event,vaults.files,vaults.vault_id)}>
                                                 Delete
                                             </button>
                                         </Link>
