@@ -12,6 +12,9 @@ export class VaultCreate extends Component {
             description:'',
             file_id:null,
             vault_id: document.location.href.split('/')[4],
+            descriptionValue:"",
+            nameValue:"",
+            isDisabled:true,
         }
     }
 
@@ -19,7 +22,7 @@ export class VaultCreate extends Component {
         event.preventDefault();
         const name = event.target.elements.name.value;
         const description = event.target.elements.description.value;
-        return axios.post(`http://127.0.0.1:5000/file/${this.state.vault_id}`,  {
+        return axios.post(`http://0.0.0.0:5000/file/${this.state.vault_id}`,  {
                 name: name,
                 description: description,
             },{headers:{
@@ -28,11 +31,11 @@ export class VaultCreate extends Component {
         ).then(res => {
             const file_id = res.data.file_id;
             localStorage.setItem('file_id',file_id);
-        }).then(response=>{
+        }).then(res=>{
             const formData = new FormData();
             const file = document.querySelector('.file');
             formData.append("file", file.files[0]);
-            axios.put(`http://127.0.0.1:5000/data/${localStorage.getItem('file_id')}`, formData, {
+            axios.put(`http://0.0.0.0:5000/data/${localStorage.getItem('file_id')}`, formData, {
                 headers: {
                     Bearer:`${localStorage.getItem('token')}`,
                     'Content-Type': 'multipart/form-data'
@@ -42,9 +45,23 @@ export class VaultCreate extends Component {
     };
 
     routeChange(){
-        let path='/file';
+        let path='/created';
         this.props.history.push(path)
     }
+
+    handleForm = (event) =>{
+        event.preventDefault();
+        const value = event.target.value;
+        const name = event.target.name;
+        this.setState({[name]:value});
+
+        if (this.state.name){
+            this.setState({isDisabled:false})
+        }
+        else if(!this.state.name){
+            this.setState({isDisabled:true})
+        }
+    };
 
     render() {
         return (
@@ -62,6 +79,8 @@ export class VaultCreate extends Component {
                                     type = 'text'
                                     name = 'name'
                                     placeholder = 'name'
+                                    value = {this.state.name}
+                                    onChange = {e => this.handleForm(e)}
                                 />
                             </FormGroup>
                         </Col>
@@ -72,6 +91,8 @@ export class VaultCreate extends Component {
                                     type = 'text'
                                     name = 'description'
                                     placeholder = 'description'
+                                    value = {this.state.description}
+                                    onChange = {e => this.handleForm(e)}
                                 />
                             </FormGroup>
                         </Col>
@@ -82,10 +103,11 @@ export class VaultCreate extends Component {
                                     className='file'
                                     type = 'file'
                                     name = 'file'
+                                    onChange={e => this.handleForm(e)}
                                 />
                             </FormGroup>
                         </Col>
-                        <Button className='mdc-button mdc-button--raised' type = 'submit'>
+                        <Button className='mdc-button mdc-button--raised' type = 'submit' disabled={this.state.isDisabled}>
                             Submit
                         </Button>
                     </Form>

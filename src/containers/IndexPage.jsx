@@ -10,24 +10,15 @@ export class IndexPage extends Component {
         super(props);
         this.state={
             isAuthorized:localStorage.getItem('token'),
-            fields:{}
         }
     }
-    onChange = updatedValue => {
-        this.setState({
-            fields: {
-                ...this.state.fields,
-                ...updatedValue
-            }
-        });
-    };
   render() {
     if (this.state.isAuthorized){
         return (
             <div>
                 <NavBar/>
                 <LoggedIn/>
-                <VaultCreate onChange={fields => this.onChange(fields)} />
+                <VaultCreate />
                 <VaultCard/>
             </div>
     )}

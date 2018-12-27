@@ -22,7 +22,7 @@ export default class LoggedIn extends React.Component {
 
     componentDidMount() {
         if (this.state.isAuthorized){
-        axios.get(`http://127.0.0.1:5000/user/${this.state.id}`,
+        axios.get(`http://0.0.0.0:5000/user/${this.state.id}`,
             {
                 headers:{
                     Bearer: `${localStorage.getItem('token')}`

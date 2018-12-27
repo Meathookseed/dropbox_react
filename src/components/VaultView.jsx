@@ -18,7 +18,7 @@ export class VaultView extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://127.0.0.1:5000/vault/${this.state.vault_id}`, {
+        axios.get(`http://0.0.0.0:5000/vault/${this.state.vault_id}`, {
             headers:{
                 Bearer:`${this.state.token}`
             }
@@ -34,7 +34,7 @@ export class VaultView extends Component {
 
     handleDelete = (event ,vault_id) =>{
         event.preventDefault();
-        axios.delete(`http://127.0.0.1:5000/file/${vault_id}`, {
+        axios.delete(`http://0.0.0.0:5000/file/${vault_id}`, {
             headers:{
                 Bearer:`${localStorage.getItem('token')}`,
             }})

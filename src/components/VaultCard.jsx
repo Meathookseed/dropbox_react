@@ -26,11 +26,11 @@ export class VaultCard extends Component {
     handleDelete = (event, files, vault_id) => {
         event.preventDefault();
         files.map( files => (
-            axios.delete(`http://127.0.0.1:5000/file/${files.file_id}`, {
+            axios.delete(`http://0.0.0.0:5000/file/${files.file_id}`, {
                 headers:{
                     Bearer:`${localStorage.getItem('token')}`,
                 }})));
-        axios.delete(`http://127.0.0.1:5000/vault/${vault_id}`, {
+        axios.delete(`http://0.0.0.0:5000/vault/${vault_id}`, {
             headers:{
                 Bearer:`${localStorage.getItem('token')}`,
             }})

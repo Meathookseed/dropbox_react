@@ -1,31 +1,25 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {withRouter} from "react-router-dom";
-import {Form,Container} from 'reactstrap'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
+import {Button,Input,Label,Form,FormGroup,Col,Container} from 'reactstrap'
+
 
 export class VaultCreate extends Component {
     constructor(props){
         super(props);
         this.routeChange = this.routeChange.bind(this);
         this.state = {
-            title:"",
-            titleError:"",
-            description:"",
-            descriptionError:"",
+            title:'',
+            description:'',
             id:localStorage.getItem('id'),
-            titleValid:false
         }
     }
-
     handleVaultCreate = (event) => {
         event.preventDefault();
         const title = event.target.elements.title.value;
         const description = event.target.elements.description.value;
-        return axios.post(`http://127.0.0.1:5000/vault/${this.state.id}`,  {
+        return axios.post(`http://0.0.0.0:5000/vault/${this.state.id}`,  {
                 title: title,
-
                 description: description,
 
             },{headers:{
@@ -38,52 +32,13 @@ export class VaultCreate extends Component {
         this.props.history.push(path)
     }
 
-    change = e => {
-        this.props.onChange({ [e.target.name]: e.target.value });
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    };
-
-    validate = () => {
-        let isError = false;
-        const errors = {
-            titleError: "",
-            descriptionError: "",
-        };
-
-        if (this.state.title.length < 4) {
-            isError = true;
-            errors.titleError = "Title needs to be at least 4 characters long";
-        }
-
-        if (this.state.description.length < 10) {
-            isError = true;
-            errors.descriptionError = "Requires valid description";
-        }
-
-        this.setState({
-            ...this.state,
-            ...errors
-        });
-
-        return isError;
-    };
-    onSubmit = e => {
+    handleChange = (e) => {
         e.preventDefault();
-        // this.props.onSubmit(this.state);
-        const err =this.validate();
-        if (!err){
-        this.setState({
-            title:"",
-            titleError:"",
-            description:"",
-            descriptionError:""
-        });
-        this.props.onChange({
-            title:"",
-            description:"",
-        })};
+        const value = e.target.value;
+        console.log(value);
+        const name = e.target.name;
+        console.log(name);
+        this.setState({[name]:value})
     };
 
   render() {
@@ -95,25 +50,32 @@ export class VaultCreate extends Component {
                   this.handleVaultCreate(event,
                   ).then(submitForm()).then(this.routeChange)}
               >
-                  <TextField
-                      name="title"
-                      hintText="title"
-                      floatingLabelText="title"
-                      value={this.state.title}
-                      onChange={e => this.change(e)}
-                      errorText={this.state.titleError}
-                  />
-                  <br />
-                  <TextField
-                      name="description"
-                      hintText="description"
-                      floatingLabelText="Description"
-                      value={this.state.description}
-                      onChange={e => this.change(e)}
-                      errorText={this.state.descriptionError}
-                  />
-                  <br />
-                  <RaisedButton label="Submit" primary onClick={e=>this.onSubmit(e)} />
+                  <Col>
+                      <FormGroup>
+                          <Label>Title</Label>
+                          <Input
+                              type = 'text'
+                              name = 'title'
+                              placeholder = 'title'
+                              value = {this.state.title}
+                              onChange={e=>this.handleChange(e)}
+                          />
+                      </FormGroup>
+                  </Col>
+                  <Col>
+                      <FormGroup>
+                          <Label>Description</Label>
+                          <Input
+                              type = 'text'
+                              name = 'description'
+                              placeholder = 'description'
+                              onChange={e=>this.handleChange(e)}
+                          />
+                      </FormGroup>
+                  </Col>
+                  <Button className='mdc-button mdc-button--raised' type = 'submit'>
+                      Submit
+                  </Button>
               </Form>
           </Container>
       </div>

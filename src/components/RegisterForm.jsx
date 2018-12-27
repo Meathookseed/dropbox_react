@@ -27,7 +27,7 @@ class RegisterForm extends React.Component{
         const username = event.target.elements.username.value;
         const password = event.target.elements.password.value;
         const email = event.target.elements.email.value;
-        return axios.post('http://127.0.0.1:5000/registration/',  {
+        return axios.post('http://0.0.0.0:5000/registration/',  {
             username: username,
             password: password,
             email: email,
