@@ -41,16 +41,19 @@ class NavBar extends React.Component {
     render() {
         if (this.state.isAuthorized)
             return (
-                <div className>
+                <div>
                     <Navbar color="dark"  expand="sm" fixed='top'>
+                        <Link to='/'>
                         <NavbarBrand>
-                            <Link to='/'>Flask Dropbox</Link>
+                                Flask Dropbox
                         </NavbarBrand>
+                        </Link>
                         <Collapse navbar>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>
                                     <Button className='mdc-button-sm mdc-button--raised m-1' onClick={this.handleLogout}>Logout</Button>
                                 </NavItem>
+                                <h1>sas</h1>
                             </Nav>
                         </Collapse>
                     </Navbar>
@@ -58,7 +61,7 @@ class NavBar extends React.Component {
             );
         else {
             return(
-                <div className>
+                <div>
                     <Navbar color="dark"  expand="sm">
                         <NavbarBrand>
                             <Link to='/'>Flask Dropbox </Link>

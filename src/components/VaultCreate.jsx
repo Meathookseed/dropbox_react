@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import {withRouter} from "react-router-dom";
 import {Button,Input,Label,Form,FormGroup,Col,Container} from 'reactstrap'
-
+import {socket, submitForm} from "../socket/api";
 
 export class VaultCreate extends Component {
     constructor(props){
         super(props);
-        this.routeChange = this.routeChange.bind(this);
         this.state = {
-            title:'',
-            description:'',
+            title:"",
+            titleError:"",
+            description:"",
+            descriptionError:"",
             id:localStorage.getItem('id'),
         }
     }
@@ -21,24 +21,10 @@ export class VaultCreate extends Component {
         return axios.post(`http://0.0.0.0:5000/vault/${this.state.id}`,  {
                 title: title,
                 description: description,
-
             },{headers:{
                 Bearer:`${localStorage.getItem('token')}`
             }}
-        )
-    };
-    routeChange(){
-        let path='/created';
-        this.props.history.push(path)
-    }
-
-    handleChange = (e) => {
-        e.preventDefault();
-        const value = e.target.value;
-        console.log(value);
-        const name = e.target.name;
-        console.log(name);
-        this.setState({[name]:value})
+            )
     };
 
   render() {
@@ -48,7 +34,7 @@ export class VaultCreate extends Component {
               <h2>Create Vault</h2>
               <Form  name='reg_form'  onSubmit = {event=>
                   this.handleVaultCreate(event,
-                  ).then(submitForm()).then(this.routeChange)}
+                  ).then(() => submitForm()).then(() => socket.emit('vault_events', {id:this.state.id}))}
               >
                   <Col>
                       <FormGroup>
@@ -57,9 +43,8 @@ export class VaultCreate extends Component {
                               type = 'text'
                               name = 'title'
                               placeholder = 'title'
-                              value = {this.state.title}
-                              onChange={e=>this.handleChange(e)}
                           />
+                          {<p>{this.state.titleError}</p>}
                       </FormGroup>
                   </Col>
                   <Col>
@@ -69,8 +54,8 @@ export class VaultCreate extends Component {
                               type = 'text'
                               name = 'description'
                               placeholder = 'description'
-                              onChange={e=>this.handleChange(e)}
                           />
+                          {<p>{this.state.descriptionError}</p>}
                       </FormGroup>
                   </Col>
                   <Button className='mdc-button mdc-button--raised' type = 'submit'>
@@ -82,9 +67,5 @@ export class VaultCreate extends Component {
     )
   }
 }
-function submitForm() {
-    let frm = document.getElementsByName('reg_form')[0];
-    frm.reset();
-    return false;
-}
-export default withRouter(VaultCreate)
+
+export default VaultCreate

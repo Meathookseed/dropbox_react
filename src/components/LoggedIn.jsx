@@ -14,7 +14,6 @@ export default class LoggedIn extends React.Component {
             username: "",
             password: "",
             photo:"",
-            links: "",
             admin: null,
             id: localStorage.getItem('id')
         }
@@ -32,9 +31,8 @@ export default class LoggedIn extends React.Component {
                 console.log(res.data);
                 const username = res.data.user.username;
                 const password = res.data.user.password;
-                const links = res.data.user.links.user_self_url;
                 const photo = res.data.user.photo;
-                this.setState({username:username,password:password,links:links,photo:photo});
+                this.setState({username:username,password:password,photo:photo});
             })
     }
     }

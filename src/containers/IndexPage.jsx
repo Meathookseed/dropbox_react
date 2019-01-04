@@ -26,7 +26,7 @@ export class IndexPage extends Component {
         return(
             <div>
                 <NavBar/>
-                <Home/>
+                <Home text={'This is a simple dropbox like application where communication of server and client based on REST API mechanism. Using Flask on back and ReactJs on front.'} user={'new user'}/>
             </div>
         )
     }

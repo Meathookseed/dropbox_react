@@ -1,28 +1,36 @@
 import React, {Component} from 'react'
 import axios from "axios";
-import {Link, withRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
+import {socket} from "../socket/api";
 
 export class VaultCard extends Component {
     constructor(props){
         super(props);
-        this.routeChange = this.routeChange.bind(this);
         this.state = {
             vaults: [],
             id:localStorage.getItem('id')
         };
     }
+
     componentDidMount() {
-        axios.get(`http://127.0.0.1:5000/user/${this.state.id}`,
+        axios.get(`http://0.0.0.0:5000/user/${this.state.id}`,
             {
                 headers: {
                     Bearer: `${localStorage.getItem('token')}`
-                }
+                },
             })
             .then(res => {
                 const vaults = res.data.user.vaults;
-                this.setState({vaults:vaults});
-            })
+                this.setState({vaults:vaults}, () => console.log('first state'));
+            });
+        socket.on('vault_state', this.onChange);
     }
+    onChange = (data) => {
+            const vaults = data.vaults;
+            this.setState({vaults:vaults}, () => console.log('state changed'));
+    };
+
+
     handleDelete = (event, files, vault_id) => {
         event.preventDefault();
         files.map( files => (
@@ -34,12 +42,9 @@ export class VaultCard extends Component {
             headers:{
                 Bearer:`${localStorage.getItem('token')}`,
             }})
-            .then(this.routeChange)
+            .then(() => socket.emit('vault_events', {id:this.state.id}))
     };
-    routeChange(){
-        let path='/created';
-        this.props.history.push(path)
-    }
+
     render() {
         return (
             <div className='container-fluid'>
@@ -67,6 +72,7 @@ export class VaultCard extends Component {
                                 </div>
                             </div>
                         </div>
+
                     ))}
                 </div>
             </div>
@@ -74,4 +80,4 @@ export class VaultCard extends Component {
     }
 }
 
-export default withRouter(VaultCard)
+export default VaultCard

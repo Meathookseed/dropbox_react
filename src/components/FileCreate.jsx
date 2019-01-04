@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import {withRouter} from "react-router-dom";
 import {Button,Input,Label,Form,FormGroup,Col,Container} from 'reactstrap'
+import {socket,submitForm} from "../socket/api";
 
-export class VaultCreate extends Component {
+
+export class FileCreate extends Component {
     constructor(props){
         super(props);
-        this.routeChange = this.routeChange.bind(this);
         this.state = {
             name:'',
             description:'',
@@ -14,7 +14,6 @@ export class VaultCreate extends Component {
             vault_id: document.location.href.split('/')[4],
             descriptionValue:"",
             nameValue:"",
-            isDisabled:true,
         }
     }
 
@@ -31,7 +30,7 @@ export class VaultCreate extends Component {
         ).then(res => {
             const file_id = res.data.file_id;
             localStorage.setItem('file_id',file_id);
-        }).then(res=>{
+        }).then(() =>{
             const formData = new FormData();
             const file = document.querySelector('.file');
             formData.append("file", file.files[0]);
@@ -42,25 +41,7 @@ export class VaultCreate extends Component {
                 }
             });
         })
-    };
 
-    routeChange(){
-        let path='/created';
-        this.props.history.push(path)
-    }
-
-    handleForm = (event) =>{
-        event.preventDefault();
-        const value = event.target.value;
-        const name = event.target.name;
-        this.setState({[name]:value});
-
-        if (this.state.name){
-            this.setState({isDisabled:false})
-        }
-        else if(!this.state.name){
-            this.setState({isDisabled:true})
-        }
     };
 
     render() {
@@ -70,7 +51,7 @@ export class VaultCreate extends Component {
                     <h2>Upload your file</h2>
                     <Form  name='reg_form'  onSubmit = {event=>
                         this.handleFileCreate(event
-                        ).then(this.routeChange)}
+                        ).then(() => submitForm()).then(()=> socket.emit('file_events', {id:this.state.vault_id, file_id:localStorage.getItem('file_id')}))}
                     >
                         <Col>
                             <FormGroup>
@@ -79,8 +60,6 @@ export class VaultCreate extends Component {
                                     type = 'text'
                                     name = 'name'
                                     placeholder = 'name'
-                                    value = {this.state.name}
-                                    onChange = {e => this.handleForm(e)}
                                 />
                             </FormGroup>
                         </Col>
@@ -91,8 +70,6 @@ export class VaultCreate extends Component {
                                     type = 'text'
                                     name = 'description'
                                     placeholder = 'description'
-                                    value = {this.state.description}
-                                    onChange = {e => this.handleForm(e)}
                                 />
                             </FormGroup>
                         </Col>
@@ -103,11 +80,10 @@ export class VaultCreate extends Component {
                                     className='file'
                                     type = 'file'
                                     name = 'file'
-                                    onChange={e => this.handleForm(e)}
                                 />
                             </FormGroup>
                         </Col>
-                        <Button className='mdc-button mdc-button--raised' type = 'submit' disabled={this.state.isDisabled}>
+                        <Button className='mdc-button mdc-button--raised' type = 'submit'>
                             Submit
                         </Button>
                     </Form>
@@ -117,4 +93,4 @@ export class VaultCreate extends Component {
     }
 }
 
-export default withRouter(VaultCreate)
+export default FileCreate
