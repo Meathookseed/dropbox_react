@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 
-const socket = io.connect('http://' + document.domain + ':5000',{
+const socket = io.connect('http://0.0.0.0:5000',{
         query: {
             Bearer:`${localStorage.getItem('token')}`
         },

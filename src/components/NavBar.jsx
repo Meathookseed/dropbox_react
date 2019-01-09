@@ -53,7 +53,6 @@ class NavBar extends React.Component {
                                 <NavItem>
                                     <Button className='mdc-button-sm mdc-button--raised m-1' onClick={this.handleLogout}>Logout</Button>
                                 </NavItem>
-                                <h1>sas</h1>
                             </Nav>
                         </Collapse>
                     </Navbar>

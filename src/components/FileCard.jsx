@@ -29,7 +29,7 @@ export class FileCard extends Component {
                 this.setState({title:title, description:description, files:files})
             })
         .then(() => socket.on('file_state', this.onChange))
-    }
+    };
 
     onChange = (data) => {
         console.log(data);

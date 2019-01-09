@@ -8,10 +8,9 @@ export class VaultCreate extends Component {
         super(props);
         this.state = {
             title:"",
-            titleError:"",
             description:"",
-            descriptionError:"",
             id:localStorage.getItem('id'),
+            isDisabled:true
         }
     }
     handleVaultCreate = (event) => {
@@ -27,6 +26,28 @@ export class VaultCreate extends Component {
             )
     };
 
+    handleInput = (event, name) =>{
+        event.preventDefault();
+        switch (name){
+            case 'description':
+                let description = event.target.value;
+                console.log(description);
+                this.setState({description:description});
+                break;
+            case 'title':
+                let title = event.target.value;
+                console.log(title.length);
+                this.setState({title:title});
+                break;
+            default:
+        }
+       let error = (this.state.title.length >0 && this.state.description.length >0) ? this.setState({isDisabled:false}) : null;
+        if (error ===null){
+            this.setState({isDisabled:true})
+        }
+    };
+
+
   render() {
     return (
       <div>
@@ -34,7 +55,7 @@ export class VaultCreate extends Component {
               <h2>Create Vault</h2>
               <Form  name='reg_form'  onSubmit = {event=>
                   this.handleVaultCreate(event,
-                  ).then(() => submitForm()).then(() => socket.emit('vault_events', {id:this.state.id}))}
+                  ).then(() => submitForm()).then(() => socket.emit('vault_events', {id:this.state.id})).then(() => this.setState({isDisabled:true}))}
               >
                   <Col>
                       <FormGroup>
@@ -43,8 +64,9 @@ export class VaultCreate extends Component {
                               type = 'text'
                               name = 'title'
                               placeholder = 'title'
+                              onChange = {event => this.handleInput(event,"title")}
                           />
-                          {<p>{this.state.titleError}</p>}
+
                       </FormGroup>
                   </Col>
                   <Col>
@@ -54,11 +76,11 @@ export class VaultCreate extends Component {
                               type = 'text'
                               name = 'description'
                               placeholder = 'description'
+                              onChange = {event => this.handleInput(event, 'description')}
                           />
-                          {<p>{this.state.descriptionError}</p>}
                       </FormGroup>
                   </Col>
-                  <Button className='mdc-button mdc-button--raised' type = 'submit'>
+                  <Button className='mdc-button mdc-button--raised' type = 'submit' disabled={this.state.isDisabled}>
                       Submit
                   </Button>
               </Form>
