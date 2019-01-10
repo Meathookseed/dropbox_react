@@ -43,32 +43,6 @@ export class FileCreate extends Component {
         })
 
     };
-    handleInput = (event, name) =>{
-        event.preventDefault();
-        switch (name){
-            case 'name':
-                let filename = event.target.value;
-                this.setState({name:filename});
-                console.log(filename);
-                break;
-            case 'description':
-                let description = event.target.value;
-                console.log(description);
-                this.setState({description:description});
-                break;
-            case 'file':
-                let file = event.target.value;
-                this.setState({file:file});
-                break;
-            default:
-        }
-        let error = (this.state.name.length >0 && this.state.description.length >0 && this.state.file.length > 0) ? this.setState({isDisabled:false}) : null;
-        console.log(error)
-        if (error ===null){
-            this.setState({isDisabled:true})
-        }
-    };
-
     render() {
         return (
             <div>
@@ -86,7 +60,7 @@ export class FileCreate extends Component {
                                     type = 'text'
                                     name = 'name'
                                     placeholder = 'name'
-                                    onChange={event => this.handleInput(event,'name')}
+                                    required
                                 />
                             </FormGroup>
                         </Col>
@@ -97,7 +71,6 @@ export class FileCreate extends Component {
                                     type = 'text'
                                     name = 'description'
                                     placeholder = 'description'
-                                    onChange={event => this.handleInput(event,'description')}
                                 />
                             </FormGroup>
                         </Col>
@@ -108,13 +81,12 @@ export class FileCreate extends Component {
                                     className='file'
                                     type = 'file'
                                     name = 'file'
-                                    onChange={event => this.handleInput(event, 'file')}
+                                    required
                                 />
                             </FormGroup>
                         </Col>
                         <Button className='mdc-button mdc-button--raised'
-                                type = 'submit'
-                                disabled={this.state.isDisabled}>
+                                type = 'submit'>
                             Submit
                         </Button>
                     </Form>

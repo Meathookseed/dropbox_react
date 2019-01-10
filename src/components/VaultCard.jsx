@@ -72,7 +72,6 @@ export class VaultCard extends Component {
                                 </div>
                             </div>
                         </div>
-
                     ))}
                 </div>
             </div>

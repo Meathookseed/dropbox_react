@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Switch,Redirect} from 'react-router-dom'
 import IndexPage from "./containers/IndexPage";
 import RegistrationPage from "./containers/RegistrationPage";
 import LoginPage from "./containers/LoginPage";
@@ -9,6 +9,12 @@ import VaultView from "./containers/VaultView";
 
 
 class App extends Component {
+   constructor(props){
+       super(props);
+       this.state = {
+           isAuthorized:!!localStorage.getItem('token')
+       }
+   }
   render() {
       return(
           <div>

@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 
 import {Jumbotron} from "reactstrap";
+import Home from "./Home";
 
 
 
@@ -39,14 +40,7 @@ export default class LoggedIn extends React.Component {
 
     render() {
         return (
-            <div className='container-fluid m-0 p-0 text-center h-50'>
-            <Jumbotron fluid>
-                <h1 className="display-1">Hello, {this.state.username}!</h1>
-                <img src={this.state.photo} alt=''/>
-                <p className="lead">You at start of discovering of my new project.</p>
-                <hr className="my-2"/>
-            </Jumbotron>
-            </div>
+           <Home username = {this.state.username}/>
         )
     }
 }

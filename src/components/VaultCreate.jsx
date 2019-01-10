@@ -26,28 +26,6 @@ export class VaultCreate extends Component {
             )
     };
 
-    handleInput = (event, name) =>{
-        event.preventDefault();
-        switch (name){
-            case 'description':
-                let description = event.target.value;
-                console.log(description);
-                this.setState({description:description});
-                break;
-            case 'title':
-                let title = event.target.value;
-                console.log(title.length);
-                this.setState({title:title});
-                break;
-            default:
-        }
-       let error = (this.state.title.length >0 && this.state.description.length >0) ? this.setState({isDisabled:false}) : null;
-        if (error ===null){
-            this.setState({isDisabled:true})
-        }
-    };
-
-
   render() {
     return (
       <div>
@@ -64,7 +42,8 @@ export class VaultCreate extends Component {
                               type = 'text'
                               name = 'title'
                               placeholder = 'title'
-                              onChange = {event => this.handleInput(event,"title")}
+                              required
+                              // onChange = {event => this.handleInput(event)}
                           />
 
                       </FormGroup>
@@ -76,11 +55,12 @@ export class VaultCreate extends Component {
                               type = 'text'
                               name = 'description'
                               placeholder = 'description'
-                              onChange = {event => this.handleInput(event, 'description')}
+                              required
+                              // onChange = {event => this.handleInput(event)}
                           />
                       </FormGroup>
                   </Col>
-                  <Button className='mdc-button mdc-button--raised' type = 'submit' disabled={this.state.isDisabled}>
+                  <Button className='mdc-button mdc-button--raised' type = 'submit'>
                       Submit
                   </Button>
               </Form>

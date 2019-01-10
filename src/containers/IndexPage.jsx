@@ -9,7 +9,7 @@ export class IndexPage extends Component {
     constructor(props){
         super(props);
         this.state={
-            isAuthorized:localStorage.getItem('token'),
+            isAuthorized:!!localStorage.getItem('token'),
         }
     }
   render() {
