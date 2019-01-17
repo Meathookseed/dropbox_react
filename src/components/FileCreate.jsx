@@ -49,9 +49,8 @@ export class FileCreate extends Component {
                 <Container className='App text-center'>
                     <h2>Upload your file</h2>
                     <Form  name='reg_form'  onSubmit = {
-                        event=> this.handleFileCreate(event)
-                            .then(()=> socket.emit('file_events', {id:this.state.vault_id, token:localStorage.getItem('token')}))
-                            .then(() => submitForm())}
+                        event=> this.handleFileCreate(event).then(() => submitForm())
+                            .then(()=> socket.emit('file_events', {id:this.state.vault_id, token:localStorage.getItem('token')}))}
                     >
                         <Col>
                             <FormGroup>
