@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
 import axios from "axios";
 import {Link} from "react-router-dom";
+
 import {socket} from "../socket/api";
+
+
 
 export class VaultCard extends Component {
     constructor(props){
@@ -13,7 +16,8 @@ export class VaultCard extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://0.0.0.0:5000/user/${this.state.id}`,
+
+        axios.get(`http://0.0.0.0:5000/user/${this.state.id}/`,
             {
                 headers: {
                     Bearer: `${localStorage.getItem('token')}`
@@ -21,28 +25,29 @@ export class VaultCard extends Component {
             })
             .then(res => {
                 const vaults = res.data.user.vaults;
-                this.setState({vaults:vaults}, () => console.log('first state'));
+                this.setState({vaults:vaults}, () => console.log('updated'));
             });
-        socket.on('vault_state', this.onChange);
+            socket.on('vault_state',this.onChange)
     }
-    onChange = (data) => {
-            const vaults = data.vaults;
-            this.setState({vaults:vaults}, () => console.log('state changed'));
-    };
 
+    onChange = (data) => {
+        console.log(data);
+            const vaults = data.vaults;
+            this.setState({vaults:vaults}, () => console.log(this.state.vaults));
+    };
 
     handleDelete = (event, files, vault_id) => {
         event.preventDefault();
         files.map( files => (
-            axios.delete(`http://0.0.0.0:5000/file/${files.file_id}`, {
+            axios.delete(`http://0.0.0.0:5000/file/${files.file_id}/`, {
                 headers:{
                     Bearer:`${localStorage.getItem('token')}`,
                 }})));
-        axios.delete(`http://0.0.0.0:5000/vault/${vault_id}`, {
+        axios.delete(`http://0.0.0.0:5000/vault/${vault_id}/`, {
             headers:{
                 Bearer:`${localStorage.getItem('token')}`,
             }})
-            .then(() => socket.emit('vault_events', {id:this.state.id}))
+            .then(()=>socket.emit('vault_events', {id:this.state.id, token:localStorage.getItem('token')}))
     };
 
     render() {

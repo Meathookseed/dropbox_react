@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {Button,Input,Label,Form,FormGroup,Col,Container} from 'reactstrap'
-import {socket,submitForm} from "../socket/api";
+import {submitForm} from "../socket/api";
+import {socket} from "../socket/api";
 
 
 export class FileCreate extends Component {
@@ -21,7 +22,7 @@ export class FileCreate extends Component {
         event.preventDefault();
         const name = event.target.elements.name.value;
         const description = event.target.elements.description.value;
-        return axios.post(`http://0.0.0.0:5000/file/${this.state.vault_id}`,  {
+        return axios.post(`http://0.0.0.0:5000/file/${this.state.vault_id}/`,  {
                 name: name,
                 description: description,
             },{headers:{
@@ -34,7 +35,7 @@ export class FileCreate extends Component {
             const formData = new FormData();
             const file = document.querySelector('.file');
             formData.append("file", file.files[0]);
-            axios.put(`http://0.0.0.0:5000/data/${localStorage.getItem('file_id')}`, formData, {
+            axios.put(`http://0.0.0.0:5000/data/${localStorage.getItem('file_id')}/`, formData, {
                 headers: {
                     Bearer:`${localStorage.getItem('token')}`,
                     'Content-Type': 'multipart/form-data'
@@ -50,7 +51,7 @@ export class FileCreate extends Component {
                     <h2>Upload your file</h2>
                     <Form  name='reg_form'  onSubmit = {
                         event=> this.handleFileCreate(event)
-                            .then(()=> socket.emit('file_events', {id:this.state.vault_id, file_id:localStorage.getItem('file_id')}))
+                            .then(()=> socket.emit('file_events', {id:this.state.vault_id, token:localStorage.getItem('token')}))
                             .then(() => submitForm())}
                     >
                         <Col>

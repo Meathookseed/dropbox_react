@@ -5,6 +5,7 @@ import LoggedIn from "../components/LoggedIn";
 import VaultCard from "../components/VaultCard";
 import VaultCreate from "../components/VaultCreate";
 
+
 export class IndexPage extends Component {
     constructor(props){
         super(props);
@@ -12,6 +13,7 @@ export class IndexPage extends Component {
             isAuthorized:!!localStorage.getItem('token'),
         }
     }
+
   render() {
     if (this.state.isAuthorized){
         return (

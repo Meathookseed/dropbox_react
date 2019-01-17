@@ -13,27 +13,28 @@ export class VaultCreate extends Component {
             isDisabled:true
         }
     }
+
     handleVaultCreate = (event) => {
         event.preventDefault();
         const title = event.target.elements.title.value;
         const description = event.target.elements.description.value;
-        return axios.post(`http://0.0.0.0:5000/vault/${this.state.id}`,  {
+        return axios.post(`http://0.0.0.0:5000/vault/${this.state.id}/`,  {
                 title: title,
                 description: description,
             },{headers:{
                 Bearer:`${localStorage.getItem('token')}`
             }}
             )
-    };
 
+    };
   render() {
     return (
       <div>
           <Container className='App text-center'>
               <h2>Create Vault</h2>
               <Form  name='reg_form'  onSubmit = {event=>
-                  this.handleVaultCreate(event,
-                  ).then(() => submitForm()).then(() => socket.emit('vault_events', {id:this.state.id})).then(() => this.setState({isDisabled:true}))}
+                  this.handleVaultCreate(event
+                  ).then(() => submitForm()).then(() => this.setState({isDisabled:true})).then(()=>socket.emit('vault_events', {id:this.state.id, token:localStorage.getItem('token')}))}
               >
                   <Col>
                       <FormGroup>
@@ -43,9 +44,7 @@ export class VaultCreate extends Component {
                               name = 'title'
                               placeholder = 'title'
                               required
-                              // onChange = {event => this.handleInput(event)}
                           />
-
                       </FormGroup>
                   </Col>
                   <Col>
@@ -56,11 +55,10 @@ export class VaultCreate extends Component {
                               name = 'description'
                               placeholder = 'description'
                               required
-                              // onChange = {event => this.handleInput(event)}
                           />
                       </FormGroup>
                   </Col>
-                  <Button className='mdc-button mdc-button--raised' type = 'submit'>
+                  <Button className='mdc-button mdc-button--raised' type = 'submit' >
                       Submit
                   </Button>
               </Form>

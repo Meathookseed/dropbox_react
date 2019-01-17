@@ -14,7 +14,7 @@ class RegisterForm extends React.Component{
             email:'',
             username:'',
             password:'',
-            formErorrs: {email:'',password:''}
+            formErrors: {email:'',password:''}
         };
     }
     routeChange(){

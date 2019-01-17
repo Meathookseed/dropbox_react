@@ -2,10 +2,9 @@ import React from 'react';
 
 import axios from 'axios';
 
-import {Jumbotron} from "reactstrap";
 import Home from "./Home";
 
-
+import {socket} from "../socket/api";
 
 export default class LoggedIn extends React.Component {
     constructor(props){
@@ -22,20 +21,19 @@ export default class LoggedIn extends React.Component {
 
     componentDidMount() {
         if (this.state.isAuthorized){
-        axios.get(`http://0.0.0.0:5000/user/${this.state.id}`,
-            {
-                headers:{
-                    Bearer: `${localStorage.getItem('token')}`
-                }
-            })
-            .then(res => {
-                console.log(res.data);
-                const username = res.data.user.username;
-                const password = res.data.user.password;
-                const photo = res.data.user.photo;
-                this.setState({username:username,password:password,photo:photo});
-            })
-    }
+            axios.get(`http://0.0.0.0:5000/user/${this.state.id}/`,
+                {
+                    headers:{
+                        Bearer: `${localStorage.getItem('token')}`
+                    }
+                })
+                .then(res => {
+                    const username = res.data.user.username;
+                    const password = res.data.user.password;
+                    const photo = res.data.user.photo;
+                    this.setState({username:username,password:password,photo:photo});
+                })
+        }
     }
 
     render() {

@@ -8,6 +8,7 @@ import {
     Button
 } from 'reactstrap';
 import {withRouter, Link} from "react-router-dom";
+import {socket} from "../socket/api";
 
 class NavBar extends React.Component {
 
@@ -29,14 +30,16 @@ class NavBar extends React.Component {
         let path = '/login';
         this.props.history.push(path);
     };
-    
-    handleLogout = () =>{
+
+    handleLogout = () => {
         let path = '/login';
         this.props.history.push(path);
         this.setState({
-            token:localStorage.removeItem('token'),
-            id:localStorage.removeItem('id')});
+            token: localStorage.removeItem('token'),
+            id: localStorage.removeItem('id')
+        });
     };
+
 
     render() {
         if (this.state.isAuthorized)
@@ -59,6 +62,7 @@ class NavBar extends React.Component {
                 </div>
             );
         else {
+            socket.close();
             return(
                 <div>
                     <Navbar color="dark"  expand="sm">

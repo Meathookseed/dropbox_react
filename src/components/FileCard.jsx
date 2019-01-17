@@ -17,7 +17,7 @@ export class FileCard extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://0.0.0.0:5000/vault/${this.state.vault_id}`, {
+        axios.get(`http://0.0.0.0:5000/vault/${this.state.vault_id}/`, {
             headers:{
                 Bearer:`${this.state.token}`
             }
@@ -27,8 +27,8 @@ export class FileCard extends Component {
                 const description = res.data.vault.description;
                 const files = res.data.vault.files;
                 this.setState({title:title, description:description, files:files})
-            })
-        .then(() => socket.on('file_state', this.onChange))
+            });
+        socket.on('file_state', this.onChange)
     };
 
     onChange = (data) => {
@@ -38,11 +38,11 @@ export class FileCard extends Component {
     };
     handleDelete = (event ,vault_id) =>{
         event.preventDefault();
-        axios.delete(`http://0.0.0.0:5000/file/${vault_id}`, {
+        axios.delete(`http://0.0.0.0:5000/file/${vault_id}/`, {
             headers:{
                 Bearer:`${localStorage.getItem('token')}`,
             }})
-            .then(() => socket.emit('file_events', {id:this.state.vault_id}))
+            .then(() => socket.emit('file_events', {id:this.state.vault_id, token:localStorage.getItem('token')}))
 
     };
 

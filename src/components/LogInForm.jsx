@@ -2,6 +2,11 @@ import React from 'react'
 import axios from 'axios';
 import { Container, Col, Form, FormGroup, Label, Input , Button} from 'reactstrap'
 import {withRouter} from 'react-router-dom';
+import {socket} from "../socket/api";
+
+
+
+
 class LogInForm extends React.Component{
     constructor (props) {
         super(props);
@@ -15,8 +20,10 @@ class LogInForm extends React.Component{
 
     routeChange(){
         let path = '/';
+        console.log(localStorage.getItem('id'));
         this.props.history.push(path);
     }
+
     handleFormSubmit = (event) => {
         event.preventDefault();
         const username = event.target.elements.username.value;
@@ -37,7 +44,9 @@ class LogInForm extends React.Component{
                         id: id
                     })
                 }
-            );
+            )
+            .then(socket.open())
+
     };
 
     render() {
