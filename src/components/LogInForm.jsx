@@ -4,9 +4,6 @@ import { Container, Col, Form, FormGroup, Label, Input , Button} from 'reactstra
 import {withRouter} from 'react-router-dom';
 import {socket} from "../socket/api";
 
-
-
-
 class LogInForm extends React.Component{
     constructor (props) {
         super(props);

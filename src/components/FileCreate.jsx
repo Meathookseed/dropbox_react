@@ -42,7 +42,6 @@ export class FileCreate extends Component {
                 }
             });
         })
-
     };
     render() {
         return (

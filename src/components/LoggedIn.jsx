@@ -4,8 +4,6 @@ import axios from 'axios';
 
 import Home from "./Home";
 
-import {socket} from "../socket/api";
-
 export default class LoggedIn extends React.Component {
     constructor(props){
         super(props);

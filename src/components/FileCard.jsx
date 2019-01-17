@@ -36,6 +36,7 @@ export class FileCard extends Component {
         const files = data.files;
         this.setState({files:files}, () => console.log('changed'))
     };
+
     handleDelete = (event ,vault_id) =>{
         event.preventDefault();
         axios.delete(`http://0.0.0.0:5000/file/${vault_id}/`, {

@@ -8,7 +8,7 @@ import {
     Button
 } from 'reactstrap';
 import {withRouter, Link} from "react-router-dom";
-import {socket} from "../socket/api";
+
 
 class NavBar extends React.Component {
 
@@ -62,7 +62,7 @@ class NavBar extends React.Component {
                 </div>
             );
         else {
-            socket.close();
+
             return(
                 <div>
                     <Navbar color="dark"  expand="sm">
