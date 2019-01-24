@@ -1,25 +1,46 @@
 import React, { Component } from 'react'
 import Home from "../components/Home";
 import NavBar from "../components/NavBar";
-import LoggedIn from "../components/LoggedIn";
 import VaultCard from "../components/VaultCard";
 import VaultCreate from "../components/VaultCreate";
+import axios from "axios";
 
 
 export class IndexPage extends Component {
     constructor(props){
         super(props);
-        this.state={
-            isAuthorized:!!localStorage.getItem('token'),
+        this.state = {
+            isAuthorized: !!localStorage.getItem('token'),
+            username: "",
+            password: "",
+            photo:"",
+            admin: null,
+            id: localStorage.getItem('id')
         }
     }
 
+    componentDidMount() {
+        if (this.state.isAuthorized){
+            axios.get(`http://0.0.0.0:5000/user/${this.state.id}/`,
+                {
+                    headers:{
+                        Bearer: `${localStorage.getItem('token')}`
+                    }
+                })
+                .then(res => {
+                    const username = res.data.user.username;
+                    const password = res.data.user.password;
+                    const photo = res.data.user.photo;
+                    this.setState({username:username,password:password,photo:photo});
+                })
+        }
+    }
   render() {
     if (this.state.isAuthorized){
         return (
             <div>
                 <NavBar/>
-                <LoggedIn/>
+                <Home username={this.state.username} />
                 <VaultCreate />
                 <VaultCard/>
             </div>

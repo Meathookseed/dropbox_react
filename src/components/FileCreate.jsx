@@ -28,14 +28,13 @@ export class FileCreate extends Component {
             },{headers:{
                     Bearer:`${localStorage.getItem('token')}`
                 }},
-        ).then(res => {
+        )
+        .then((res) =>{
             const file_id = res.data.file_id;
-            localStorage.setItem('file_id',file_id);
-        }).then(() =>{
             const formData = new FormData();
             const file = document.querySelector('.file');
             formData.append("file", file.files[0]);
-            axios.put(`http://0.0.0.0:5000/data/${localStorage.getItem('file_id')}/`, formData, {
+            axios.put(`http://0.0.0.0:5000/data/${file_id}/`, formData, {
                 headers: {
                     Bearer:`${localStorage.getItem('token')}`,
                     'Content-Type': 'multipart/form-data'

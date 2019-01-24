@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {BrowserRouter, Route, Switch,Redirect} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import IndexPage from "./containers/IndexPage";
 import RegistrationPage from "./containers/RegistrationPage";
 import LoginPage from "./containers/LoginPage";
