@@ -40,7 +40,7 @@ export class IndexPage extends Component {
         return (
             <div>
                 <NavBar/>
-                <Home username={this.state.username} />
+                <Home username={this.state.username}/>
                 <VaultCreate />
                 <VaultCard/>
             </div>
