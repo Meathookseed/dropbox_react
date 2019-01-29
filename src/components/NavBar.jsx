@@ -45,11 +45,13 @@ class NavBar extends React.Component {
             return (
                 <div>
                     <Navbar color="dark"  expand="sm" fixed='top'>
-                        <Link to='/'>
+
                         <NavbarBrand>
+                            <Link to='/'>
                                 Flask Dropbox
+                            </Link>
                         </NavbarBrand>
-                        </Link>
+
                         <Collapse navbar>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>

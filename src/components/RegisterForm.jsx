@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios';
 import { Container, Col, Form, FormGroup, Label, Input , Button} from 'reactstrap'
 import {withRouter} from "react-router-dom";
+import {socket} from "../socket/api";
 
 
 class RegisterForm extends React.Component{
@@ -18,7 +19,7 @@ class RegisterForm extends React.Component{
         };
     }
     routeChange(){
-        let path = '/';
+        let path = '/login';
         this.props.history.push(path);
     }
 
@@ -43,7 +44,8 @@ class RegisterForm extends React.Component{
                         id: id
                     })
                 }
-            );
+            )
+            .then(socket.open())
     };
 
 

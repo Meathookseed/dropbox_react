@@ -1,7 +1,8 @@
 import io from 'socket.io-client'
 
-const socket =  io.connect('http://0.0.0.0:5000',{
-    autoConnect:false
+const socket =  io.connect('ws://localhost:5000',{
+    transports:['websocket'],
+    upgrade:false,
 });
 
 function submitForm() {
