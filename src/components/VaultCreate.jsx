@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {Button,Input,Label,Form,FormGroup,Col,Container} from 'reactstrap'
 import {socket, submitForm} from "../socket/api";
+import {CardElement, injectStripe} from 'react-stripe-elements'
 
 export class VaultCreate extends Component {
     constructor(props){
@@ -30,6 +31,7 @@ export class VaultCreate extends Component {
   render() {
     return (
       <div>
+
           <Container className='App text-center'>
               <h2>Create Vault</h2>
               <Form  name='reg_form'  onSubmit = {event=>
