@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {Button,Input,Label,Form,FormGroup,Col,Container} from 'reactstrap'
-import {submitForm} from "../socket/api";
-import {socket} from "../socket/api";
+import {Bearer, localhost, submitForm} from "../../utils";
+import {socket} from "../../socket/api";
 
 
 export class FileCreate extends Component {
@@ -18,39 +18,37 @@ export class FileCreate extends Component {
         }
     }
 
+    onChange = (event) => {
+        const value = event.target.value;
+        const name = event.target.name;
+        this.setState({[name]:value})
+    };
+
     handleFileCreate = (event) => {
         event.preventDefault();
-        const name = event.target.elements.name.value;
-        const description = event.target.elements.description.value;
-        return axios.post(`http://0.0.0.0:5000/file/${this.state.vault_id}/`,  {
-                name: name,
-                description: description,
-            },{headers:{
-                    Bearer:`${localStorage.getItem('token')}`
-                }},
-        )
+        const data = { name: this.state.name, description: this.state.description};
+        return axios.post(`${localhost}/file/${this.state.vault_id}/`, data,{headers: Bearer})
         .then((res) =>{
             const file_id = res.data.file_id;
             const formData = new FormData();
             const file = document.querySelector('.file');
             formData.append("file", file.files[0]);
-            axios.put(`http://0.0.0.0:5000/data/${file_id}/`, formData, {
+            axios.put(`${localhost}/data/${file_id}/`, formData, {
                 headers: {
                     Bearer:`${localStorage.getItem('token')}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });
         })
+            .then(() => submitForm('file-create-form'))
+            .then(()=> socket.emit('file_events', {id:this.state.vault_id, token:localStorage.getItem('token')}))
     };
     render() {
         return (
             <div>
                 <Container className='App text-center'>
                     <h2>Upload your file</h2>
-                    <Form  name='reg_form'  onSubmit = {
-                        event=> this.handleFileCreate(event).then(() => submitForm())
-                            .then(()=> socket.emit('file_events', {id:this.state.vault_id, token:localStorage.getItem('token')}))}
-                    >
+                    <Form  name='file-create-form'  onSubmit = {this.handleFileCreate}>
                         <Col>
                             <FormGroup>
                                 <Label>Title</Label>
@@ -59,6 +57,7 @@ export class FileCreate extends Component {
                                     name = 'name'
                                     placeholder = 'name'
                                     required
+                                    onChange = {this.onChange}
                                 />
                             </FormGroup>
                         </Col>
@@ -69,6 +68,7 @@ export class FileCreate extends Component {
                                     type = 'text'
                                     name = 'description'
                                     placeholder = 'description'
+                                    onChange = {this.onChange}
                                 />
                             </FormGroup>
                         </Col>
@@ -80,6 +80,7 @@ export class FileCreate extends Component {
                                     type = 'file'
                                     name = 'file'
                                     required
+                                    onChange = {this.onChange}
                                 />
                             </FormGroup>
                         </Col>

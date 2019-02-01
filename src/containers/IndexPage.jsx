@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import Home from "../components/Home";
 import NavBar from "../components/NavBar";
-import VaultCard from "../components/VaultCard";
-import VaultCreate from "../components/VaultCreate";
+import VaultCardContainer from "../components/Vault/VaultCardContainer";
+import VaultCreateForm from "../components/Vault/VaultCreateForm";
 import axios from "axios";
+import CheckoutForm from '../components/CheckoutForm'
+import {StripeProvider, Elements} from 'react-stripe-elements'
 
 
 export class IndexPage extends Component {
+
     constructor(props){
         super(props);
         this.state = {
@@ -41,8 +44,13 @@ export class IndexPage extends Component {
             <div>
                 <NavBar/>
                 <Home username={this.state.username}/>
-                <VaultCreate />
-                <VaultCard/>
+                <VaultCreateForm />
+                <VaultCardContainer/>
+                <StripeProvider apiKey="pk_test_5B87ZrxvYF2ZHNUBua77nUcT">
+                    <Elements>
+                        <CheckoutForm/>
+                    </Elements>
+                </StripeProvider>
             </div>
     )}
     else{

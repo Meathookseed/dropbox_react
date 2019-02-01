@@ -5,9 +5,4 @@ const socket =  io.connect('ws://localhost:5000',{
     upgrade:false,
 });
 
-function submitForm() {
-    let frm = document.getElementsByName('reg_form')[0];
-    frm.reset();
-    return false;
-}
-export {socket, submitForm}
+export {socket}

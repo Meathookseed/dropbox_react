@@ -1,29 +1,37 @@
 import React, {Component} from 'react';
 import {CardElement, injectStripe} from 'react-stripe-elements';
 import axios from 'axios'
-class CheckoutForm extends Component {
-    constructor(props) {
-        super(props);
-        this.submit = this.submit.bind(this);
-    }
 
-    async submit(ev) {
+class CheckoutForm extends Component {
+     submit = async (ev) => {
         ev.preventDefault();
-        let {token} = await this.props.stripe.createToken({name:"Name"});
-        console.log(token);
+        const {token} = await this.props.stripe.createToken({name:"Name"});
         await axios.post('http://0.0.0.0:5000/charge/', {
             'stripeToken':token.id
         }, { headers:{
             'Bearer':localStorage.getItem('token')}
         })
-    }
+    };
 
     render() {
         return (
-            <div className="checkout">
-                <p>Would you like to complete the purchase?</p>
-                <CardElement style={{base:{fontSize:'50px'}}}/>
-                <button onClick={this.submit}>Send</button>
+            <div className="container align-content-center text-sm-center">
+                <br/>
+                <CardElement style={{ base: {
+                        color: '#32325d',
+                        lineHeight: '35px',
+                        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                        fontSmoothing: 'antialiased',
+                        fontSize: '30px',
+                        '::placeholder': {
+                            color: '#aab7c4'
+                        }
+                    },
+                    invalid: {
+                        color: '#fa755a',
+                        iconColor: '#fa755a'
+                    }}}/>
+                <button  className=' mdc-button mdc-button--raised' onClick={this.submit}>Send</button>
             </div>
         );
     }

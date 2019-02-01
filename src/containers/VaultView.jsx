@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import NavBar from "../components/NavBar";
 import Home from "../components/Home";
-import FileCreate from "../components/FileCreate";
-import FileCard from "../components/FileCard";
+import FileCreate from "../components/File/FileCreate";
+import FileCardContainer from "../components/File/FileCardContainer";
 
 export class VaultView extends Component {
   render() {
@@ -11,7 +11,7 @@ export class VaultView extends Component {
           <NavBar/>
           <Home text1 = 'This is your vault' text2 = 'This is your new vault'/>
           <FileCreate/>
-          <FileCard/>
+          <FileCardContainer/>
       </div>
     )
   }
