@@ -1,0 +1,10 @@
+version: '2'
+services:
+  client:
+    build:
+      context: .
+    command: npm start
+    volumes:
+      - /react/node_modules
+    ports:
+      - "3000:3000"
