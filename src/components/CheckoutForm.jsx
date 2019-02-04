@@ -19,7 +19,6 @@ class CheckoutForm extends Component {
                 <br/>
                 <CardElement style={{ base: {
                         color: '#32325d',
-                        lineHeight: '35px',
                         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
                         fontSmoothing: 'antialiased',
                         fontSize: '30px',

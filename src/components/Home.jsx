@@ -8,7 +8,7 @@ class Home extends React.Component {
     };
     render() {
             return (
-                <div className='container-fluid m-0 p-0 text-center ml-auto'>
+                <div className='container-fluid m-0 p-3 text-center ml-auto'>
                     <Jumbotron fluid>
                         <h1 className="display-1">Hello, {this.props.username}!</h1>
                         <p className="lead">You at start of discovering of my new project.</p>

@@ -31,10 +31,8 @@ export class IndexPage extends Component {
                     }
                 })
                 .then(res => {
-                    const username = res.data.user.username;
-                    const password = res.data.user.password;
-                    const photo = res.data.user.photo;
-                    this.setState({username:username,password:password,photo:photo});
+                    const {username,password,photo} = res.data;
+                    this.setState({username,password,photo});
                 })
         }
     }

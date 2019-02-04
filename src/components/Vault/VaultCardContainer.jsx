@@ -15,6 +15,7 @@ export class VaultCardContainer extends Component {
     }
 
     componentDidMount() {
+        console.log(localStorage.getItem('token'));
         axios.get(`${localhost}/user/${this.state.id}/`, {headers: Bearer})
             .then(res => {
                 const vaults = res.data.user.vaults;
@@ -25,7 +26,7 @@ export class VaultCardContainer extends Component {
 
     onChange = (data) => {
             const vaults = data.vaults;
-            this.setState({vaults:vaults});
+            this.setState({vaults});
     };
 
     handleDelete = (event, files, vault_id) => {

@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import NavBar from "../components/NavBar";
-import SignInForm from "../components/LogInForm";
-
+import AuthorizationForm from "../components/AuthorizationForm";
 
 export class LoginPage extends Component {
   render() {
     return (
       <div>
           <NavBar/>
-          <SignInForm/>
+          <AuthorizationForm pathname='/login'/>
       </div>
     )
   }
